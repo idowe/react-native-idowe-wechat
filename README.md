@@ -1,16 +1,16 @@
 <img height="200" src="./weixin.png?raw=true">
 
-# React-Native-Wechat
+# React-Native-Idowe-Wechat
 
 [React Native] bridging library that integrates WeChat SDKs:
 
 - [x] iOS SDK 1.7.2
 - [x] Android SDK 221
 
-And [react-native-wechat] has the following tracking data in open source world:
+And [react-native-idowe-wechat] has the following tracking data in open source world:
 
-| NPM | Dependency | Downloads | Build |
-|-----|------------|-----------|-------|
+| NPM                                  | Dependency                                     | Downloads                                      | Build                                       |
+| ------------------------------------ | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
 | [![NPM version][npm-image]][npm-url] | [![Dependency Status][david-image]][david-url] | [![Downloads][downloads-image]][downloads-url] | [![Build Status][travis-image]][travis-url] |
 
 ## Table of Contents
@@ -29,7 +29,7 @@ And [react-native-wechat] has the following tracking data in open source world:
 
 ## API Documentation
 
-[react-native-wechat] exposes the promise-based, therefore you could use `Promise`
+[react-native-idowe-wechat] exposes the promise-based, therefore you could use `Promise`
 or `async/await` to manage your dataflow.
 
 #### registerApp(appid)
@@ -40,9 +40,9 @@ or `async/await` to manage your dataflow.
 This method should be called once globally.
 
 ```js
-import * as WeChat from 'react-native-wechat';
+import * as WeChat from "react-native-idowe-wechat";
 
-WeChat.registerApp('appid');
+WeChat.registerApp("appid");
 ```
 
 #### registerAppWithDescription(appid, description)
@@ -53,7 +53,7 @@ WeChat.registerApp('appid');
 
 This method is only available on iOS.
 
-#### isWXAppInstalled() 
+#### isWXAppInstalled()
 
 - returns {Boolean} if WeChat is installed.
 
@@ -61,19 +61,19 @@ Check if wechat installed in this app.
 
 #### isWXAppSupportApi()
 
-- returns {Boolean}  Contain the result.
+- returns {Boolean} Contain the result.
 
 Check if wechat support open url.
 
 #### getApiVersion()
 
-- returns {String}  Contain the result.
+- returns {String} Contain the result.
 
 Get api version of WeChat SDK.
 
 #### openWXApp()
 
-- returns {Boolean} 
+- returns {Boolean}
 
 Open the WeChat app from your application.
 
@@ -83,11 +83,11 @@ Open the WeChat app from your application.
 - `state` {String} the state of OAuth2
 - returns {Object}
 
-Send authentication request, and it returns an object with the 
+Send authentication request, and it returns an object with the
 following fields:
 
 | field   | type   | description                         |
-|---------|--------|-------------------------------------|
+| ------- | ------ | ----------------------------------- |
 | errCode | Number | Error Code                          |
 | errStr  | String | Error message if any error occurred |
 | openId  | String |                                     |
@@ -116,24 +116,24 @@ following fields:
 Share a `ShareMetadata` message to timeline(朋友圈) and returns:
 
 | name    | type   | description                         |
-|---------|--------|-------------------------------------|
+| ------- | ------ | ----------------------------------- |
 | errCode | Number | 0 if authorization successed        |
 | errStr  | String | Error message if any error occurred |
 
 These example code need 'react-native-chat' and 'react-native-fs' plugin.
 
 ```js
-import * as WeChat from 'react-native-wechat';
-import fs from 'react-native-fs';
-let resolveAssetSource = require('resolveAssetSource');
+import * as WeChat from "react-native-idowe-wechat";
+import fs from "react-native-fs";
+let resolveAssetSource = require("resolveAssetSource");
 
 // Code example to share text message:
 try {
   let result = await WeChat.shareToTimeline({
-    type: 'text', 
-    description: 'hello, wechat'
+    type: "text",
+    description: "hello, wechat"
   });
-  console.log('share text message to time line successful:', result);
+  console.log("share text message to time line successful:", result);
 } catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
@@ -146,15 +146,15 @@ try {
 // Share raw http(s) image from web will always fail with unknown reason, please use image file or image resource instead
 try {
   let result = await WeChat.shareToTimeline({
-    type: 'imageUrl',
-    title: 'web image',
-    description: 'share web image to time line',
-    mediaTagName: 'email signature',
+    type: "imageUrl",
+    title: "web image",
+    description: "share web image to time line",
+    mediaTagName: "email signature",
     messageAction: undefined,
     messageExt: undefined,
-    imageUrl: 'http://www.ncloud.hk/email-signature-262x100.png'
+    imageUrl: "http://www.ncloud.hk/email-signature-262x100.png"
   });
-  console.log('share image url to time line successful:', result);
+  console.log("share image url to time line successful:", result);
 } catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
@@ -166,9 +166,9 @@ try {
 // Code example to share image file:
 try {
   let rootPath = fs.DocumentDirectoryPath;
-  let savePath = rootPath + '/email-signature-262x100.png';
+  let savePath = rootPath + "/email-signature-262x100.png";
   console.log(savePath);
-  
+
   /*
    * savePath on iOS may be:
    *  /var/mobile/Containers/Data/Application/B1308E13-35F1-41AB-A20D-3117BE8EE8FE/Documents/email-signature-262x100.png
@@ -176,17 +176,20 @@ try {
    * savePath on Android may be:
    *  /data/data/com.wechatsample/files/email-signature-262x100.png
    **/
-  await fs.downloadFile('http://www.ncloud.hk/email-signature-262x100.png', savePath);
+  await fs.downloadFile(
+    "http://www.ncloud.hk/email-signature-262x100.png",
+    savePath
+  );
   let result = await WeChat.shareToTimeline({
-    type: 'imageFile',
-    title: 'image file download from network',
-    description: 'share image file to time line',
-    mediaTagName: 'email signature',
+    type: "imageFile",
+    title: "image file download from network",
+    description: "share image file to time line",
+    mediaTagName: "email signature",
     messageAction: undefined,
     messageExt: undefined,
     imageUrl: "file://" + savePath // require the prefix on both iOS and Android platform
   });
-  console.log('share image file to time line successful:', result);
+  console.log("share image file to time line successful:", result);
 } catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
@@ -197,19 +200,18 @@ try {
 
 // Code example to share image resource:
 try {
-  let imageResource = require('./email-signature-262x100.png');
+  let imageResource = require("./email-signature-262x100.png");
   let result = await WeChat.shareToTimeline({
-    type: 'imageResource',
-    title: 'resource image',
-    description: 'share resource image to time line',
-    mediaTagName: 'email signature',
+    type: "imageResource",
+    title: "resource image",
+    description: "share resource image to time line",
+    mediaTagName: "email signature",
     messageAction: undefined,
     messageExt: undefined,
     imageUrl: resolveAssetSource(imageResource).uri
   });
-  console.log('share resource image to time line successful', result);
-}
-catch (e) {
+  console.log("share resource image to time line successful", result);
+} catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
   } else {
@@ -222,25 +224,29 @@ catch (e) {
 // iOS code use DocumentDirectoryPath
 try {
   let rootPath = fs.DocumentDirectoryPath;
-  let fileName = 'signature_method.doc';
+  let fileName = "signature_method.doc";
   /*
    * savePath on iOS may be:
    *  /var/mobile/Containers/Data/Application/B1308E13-35F1-41AB-A20D-3117BE8EE8FE/Documents/signature_method.doc
-   **/ 
-  let savePath = rootPath + '/' + fileName;
+   **/
 
-  await fs.downloadFile('https://open.weixin.qq.com/zh_CN/htmledition/res/assets/signature_method.doc', savePath);
+  let savePath = rootPath + "/" + fileName;
+
+  await fs.downloadFile(
+    "https://open.weixin.qq.com/zh_CN/htmledition/res/assets/signature_method.doc",
+    savePath
+  );
   let result = await WeChat.shareToSession({
-    type: 'file',
+    type: "file",
     title: fileName, // WeChat app treat title as file name
-    description: 'share word file to chat session',
-    mediaTagName: 'word file',
+    description: "share word file to chat session",
+    mediaTagName: "word file",
     messageAction: undefined,
     messageExt: undefined,
     filePath: savePath,
-    fileExtension: '.doc'
+    fileExtension: ".doc"
   });
-  console.log('share word file to chat session successful', result);
+  console.log("share word file to chat session successful", result);
 } catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
@@ -252,26 +258,28 @@ try {
 //android code use ExternalDirectoryPath
 try {
   let rootPath = fs.ExternalDirectoryPath;
-  let fileName = 'signature_method.doc';
+  let fileName = "signature_method.doc";
   /*
    * savePath on Android may be:
    *  /storage/emulated/0/Android/data/com.wechatsample/files/signature_method.doc
    **/
-  let savePath = rootPath + '/' + fileName;
-  await fs.downloadFile('https://open.weixin.qq.com/zh_CN/htmledition/res/assets/signature_method.doc', savePath);
+  let savePath = rootPath + "/" + fileName;
+  await fs.downloadFile(
+    "https://open.weixin.qq.com/zh_CN/htmledition/res/assets/signature_method.doc",
+    savePath
+  );
   let result = await WeChat.shareToSession({
-    type: 'file',
+    type: "file",
     title: fileName, // WeChat app treat title as file name
-    description: 'share word file to chat session',
-    mediaTagName: 'word file',
+    description: "share word file to chat session",
+    mediaTagName: "word file",
     messageAction: undefined,
     messageExt: undefined,
     filePath: savePath,
-    fileExtension: '.doc'
+    fileExtension: ".doc"
   });
-  console.log('share word file to chat session successful', result);
-}
-catch (e) {
+  console.log("share word file to chat session successful", result);
+} catch (e) {
   if (e instanceof WeChat.WechatError) {
     console.error(e.stack);
   } else {
@@ -290,8 +298,8 @@ Similar to `shareToTimeline` but send message to a friend or chat group.
 #### pay(payload)
 
 - `payload` {Object} the payment data
-  - `partnerId` {String} 商家向财付通申请的商家ID
-  - `prepayId` {String} 预支付订单ID
+  - `partnerId` {String} 商家向财付通申请的商家 ID
+  - `prepayId` {String} 预支付订单 ID
   - `nonceStr` {String} 随机串
   - `timeStamp` {String} 时间戳
   - `package` {String} 商家根据财付通文档填写的数据和签名
@@ -301,14 +309,14 @@ Similar to `shareToTimeline` but send message to a friend or chat group.
 Sends request for proceeding payment, then returns an object:
 
 | name    | type   | description                         |
-|---------|--------|-------------------------------------|
+| ------- | ------ | ----------------------------------- |
 | errCode | Number | 0 if authorization successed        |
 | errStr  | String | Error message if any error occurred |
 
 ## Installation
 
 ```sh
-$ npm install react-native-wechat --save
+$ npm install react-native-idowe-wechat --save
 ```
 
 ## Community
@@ -319,8 +327,8 @@ $ npm install react-native-wechat --save
 
 #### Tutorials
 
-- [react-native-wechat微信组件的使用](http://www.jianshu.com/p/3f424cccb888)
-- [超详细React Native实现微信好友/朋友圈分享功能-Android/iOS双平台通用](http://www.jianshu.com/p/ce5439dd1f52)
+- [react-native-idowe-wechat 微信组件的使用](http://www.jianshu.com/p/3f424cccb888)
+- [超详细 React Native 实现微信好友/朋友圈分享功能-Android/iOS 双平台通用](http://www.jianshu.com/p/ce5439dd1f52)
 - [柳轩涤俗 - 微信登录](http://www.cnblogs.com/zhangdw/p/6194345.html)
 
 #### Who use it
@@ -330,11 +338,11 @@ $ npm install react-native-wechat --save
 
 ## Authors
 
-| GitHub        | Role       | Email                 |
-|---------------|------------|-----------------------|
-| [@yorkie]     | Author     | yorkiefixer@gmail.com |
-| [@xing-zheng] | Emeriti    |                       |
-| [@tdzl2003]   | Emeriti    | tdzl2003@gmail.com    |
+| GitHub        | Role    | Email                 |
+| ------------- | ------- | --------------------- |
+| [@yorkie]     | Author  | yorkiefixer@gmail.com |
+| [@xing-zheng] | Emeriti |                       |
+| [@tdzl2003]   | Emeriti | tdzl2003@gmail.com    |
 
 [@yorkie]: https://github.com/yorkie
 [@xing-zheng]: https://github.com/xing-zheng
@@ -344,16 +352,16 @@ $ npm install react-native-wechat --save
 
 MIT
 
-[react-native-wechat]: https://github.com/yorkie/react-native-wechat
-[npm-image]: https://img.shields.io/npm/v/react-native-wechat.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/react-native-wechat
-[travis-image]: https://img.shields.io/travis/yorkie/react-native-wechat.svg?style=flat-square
-[travis-url]: https://travis-ci.org/yorkie/react-native-wechat
-[david-image]: http://img.shields.io/david/yorkie/react-native-wechat.svg?style=flat-square
-[david-url]: https://david-dm.org/yorkie/react-native-wechat
-[downloads-image]: http://img.shields.io/npm/dm/react-native-wechat.svg?style=flat-square
-[downloads-url]: https://npmjs.org/package/react-native-wechat
-[React Native]: https://github.com/facebook/react-native
+[react-native-wechat]: https://github.com/yorkie/react-native-idowe-wechat
+[npm-image]: https://img.shields.io/npm/v/react-native-idowe-wechat.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/react-native-idowe-wechat
+[travis-image]: https://img.shields.io/travis/yorkie/react-native-idowe-wechat.svg?style=flat-square
+[travis-url]: https://travis-ci.org/yorkie/react-native-idowe-wechat
+[david-image]: http://img.shields.io/david/yorkie/react-native-idowe-wechat.svg?style=flat-square
+[david-url]: https://david-dm.org/yorkie/react-native-idowe-wechat
+[downloads-image]: http://img.shields.io/npm/dm/react-native-idowe-wechat.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/react-native-idowe-wechat
+[react native]: https://github.com/facebook/react-native
 [react-native-cn]: https://github.com/reactnativecn
-[WeChat SDK]: https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417674108&token=&lang=zh_CN
-[Linking Libraries iOS Guidance]: https://developer.apple.com/library/ios/recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html
+[wechat sdk]: https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417674108&token=&lang=zh_CN
+[linking libraries ios guidance]: https://developer.apple.com/library/ios/recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html
